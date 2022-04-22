@@ -1,0 +1,33 @@
+[control]
+ubuntu-c ansible_connection=local #localhost
+
+[centos]
+centos1 ansible_user=root ansible_port=2222 # or centos1:2222 ansible_user=root
+#centos2 ansible_user=root
+#centos3 ansible_user=root
+# Using range
+centos[2:3]
+
+[centos:vars]
+ansible_user=root
+
+[ubuntu]
+#ubuntu1 ansible_become=true ansible_become_pass=password # ansible_become=true means become a sudo user
+#ubuntu2 ansible_become=true ansible_become_pass=password
+#ubuntu3 ansible_become=true ansible_become_pass=password
+# Using range
+ubuntu[1:3]
+
+[ubuntu:vars]
+ansible_become=true
+ansible_become_pass=password
+
+[linux:children] # linux is the parent
+centos
+ubuntu
+
+#[all:vars] #Entry at the host level takes precendence over all group.(This is generic)
+#ansible_port=1234
+
+[linux:vars] #vars to the parent level that gets inherted to children
+ansible_port=1234
