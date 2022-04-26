@@ -1,0 +1,27 @@
+---
+- 
+  hosts: linux
+  
+  vars:
+    motd_centos: "Welcome to Centos Linux"
+    motd_ubuntu: "Welcome to Ubuntu Linux"  
+  tasks:
+    - name: Configure Message Of The Day
+      copy:
+        content: "{{motd_centos}}"
+        dest: /etc/motd
+      notify: motd changed
+      when: ansible_distribution == "CentOS"
+
+    - name: Configure Message Of The Day
+      copy:
+        content: "{{motd_ubuntu}}"
+        dest: /etc/motd
+      notify: motd changed
+      when: ansible_distribution == "Ubuntu"
+
+  handlers:
+    - name: motd changed
+      debug:
+        msg: msg of the day changed.
+...

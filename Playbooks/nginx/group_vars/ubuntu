@@ -1,0 +1,4 @@
+---
+ansible_user: root
+nginx_root_location: /var/www/html
+...

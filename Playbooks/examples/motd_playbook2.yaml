@@ -1,0 +1,22 @@
+---
+-
+ hosts: centos
+ user: root
+ gather_facts: False
+
+ vars:
+   motd: "Welcome to Centos \n"
+
+ tasks:
+  - name: Message of the day (MOTD)
+    copy:
+      content: "{{motd}}" 
+      dest: /etc/motd
+    notify: motd change
+ 
+ handlers:
+  - name: motd change
+    debug:
+      msg: motd was changed
+...
+
